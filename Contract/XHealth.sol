@@ -211,7 +211,7 @@ contract xHEALTH is IERC20Metadata, Ownable {
 
     address private teamWallet = 0x42e8d918fcDCCBeFc860dE058e6D7E60eF4fb6bA;
 
-    IERC20 _USDC = IERC20(0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E);
+    IERC20 _USDC = IERC20(0x3E937B4881CBd500d05EeDAB7BA203f2b7B3f74f);
 
     constructor(address _usdc) {
         _balances[msg.sender] = _totalSupply;
@@ -294,8 +294,9 @@ contract xHEALTH is IERC20Metadata, Ownable {
 
     function buyToken(address buyer, uint256 amount) public {
         require(isInSale == true, "xHEALTH: sale finished.");
-        require(_USDC.transferFrom(buyer, teamWallet, pricePerToken * amount) == true, "xHEALTH: usdc transfer failed.");
         require(amount <= _balances[owner()], "xHEALTH: insufficient balance in owner.");
+        require(_USDC.transferFrom(buyer, teamWallet, pricePerToken * amount) == true, "xHEALTH: usdc transfer failed.");
+        
         if(isPresale == true) {
             require(isInWhitelist[buyer] == true, "xHEALTH: you can't buy token now.");
         }
